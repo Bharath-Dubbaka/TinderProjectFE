@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../utils/store/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
    const photoUrl = useSelector((state) => state.user?.photoUrl);
@@ -19,17 +19,13 @@ const Navbar = () => {
       dispatch(removeUser());
       console.log("user logged out");
    };
-   const handleProfilePageNav = () => {
-      navigate("/profile");
-   };
 
-   const handleMyFeedNav = () => {
-      navigate("/");
-   };
    return (
       <div className="navbar bg-base-300 shadow-sm px-10">
          <div className="flex-1">
-            <a className="btn btn-ghost text-2xl">☘️ DevTinder</a>
+            <Link to="/" className="btn btn-ghost text-2xl">
+               ☘️ DevTinder
+            </Link>
          </div>
          {photoUrl && (
             <div className="flex gap-2 align-center items-center">
@@ -51,16 +47,16 @@ const Navbar = () => {
                      tabIndex={0}
                      className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
                   >
-                     <li onClick={handleProfilePageNav}>
-                        <a className="justify-between">
+                     <li>
+                        <Link to="/profile" className="justify-between">
                            Profile
                            <span className="badge">
                               {loggedInUserFirstName}
                            </span>
-                        </a>
+                        </Link>
                      </li>
-                     <li onClick={handleMyFeedNav}>
-                        <a>My Feed</a>
+                     <li>
+                        <Link to="/">My Feed</Link>
                      </li>
                      <li onClick={handleLogout}>
                         <a>Logout</a>
