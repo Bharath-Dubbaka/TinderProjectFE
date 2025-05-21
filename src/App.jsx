@@ -1,14 +1,26 @@
 import { useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./components/Login";
+import Body from "./components/Body";
+import Profile from "./components/Profile";
 
 function App() {
    const [count, setCount] = useState(0);
 
    return (
       <>
-         <Navbar />
-         <div>Home</div>
+         <BrowserRouter basename="/">
+            <Routes>
+               <Route path="/" element={<Body />}>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/profile" element={<Profile />} />
+               </Route>
+            </Routes>
+         </BrowserRouter>
+         {/* <Navbar />
+         <div>Home from div</div> */}
       </>
    );
 }

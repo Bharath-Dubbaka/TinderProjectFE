@@ -5,7 +5,7 @@ const Navbar = () => {
       <div className="navbar bg-base-300 shadow-sm px-10">
          <div className="flex-1">
             <a className="btn btn-ghost text-xl">☘️ DevTinder</a>
-         </div>
+         </div> 
          <div className="flex gap-2">
             <input
                type="text"
