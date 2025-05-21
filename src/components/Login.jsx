@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/store/userSlice";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
 
 const Login = () => {
    const [emailID, setEmailID] = useState("virat@gmail.com");
    const [password, setPassword] = useState("Q!w2e39548");
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
    console.log(emailID, "emailID");
    console.log(password, "password");
 
@@ -12,16 +18,20 @@ const Login = () => {
       console.log("handleLoginSubmit");
       try {
          const res = await axios.post(
-            "http://localhost:9999/login",
+            BASE_URL + "/login",
             {
                emailID,
                password,
             },
-            { withCredentials: true }
+            { withCredentials: true } //for saving cookies in browser, bcz due to cors not matching we must specify to save cookies
          );
-         //  const response = await fetch("http://localhost:9999/login");
-         //  const json = await response.json();
-         //  console.log(json.results, "json.results");
+         console.log(res, "res from handleLoginSubmit");
+
+         //saving loggedInUser Info to userSlice
+         dispatch(addUser(res.data));
+
+         //redirect to feed/home
+         navigate("/");
       } catch (err) {
          console.error("Error logging in:", err);
       }
