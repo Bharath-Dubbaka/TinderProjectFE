@@ -8,6 +8,7 @@ import { BASE_URL } from "../utils/constants";
 const Login = () => {
    const [emailID, setEmailID] = useState("virat@gmail.com");
    const [password, setPassword] = useState("Q!w2e39548");
+   const [error, setError] = useState("");
    const dispatch = useDispatch();
    const navigate = useNavigate();
    console.log(emailID, "emailID");
@@ -33,7 +34,8 @@ const Login = () => {
          //redirect to feed/home
          navigate("/");
       } catch (err) {
-         console.error("Error logging in:", err);
+         setError(err?.response?.data || "Something went wrong");
+         console.error(err);
       }
    };
    return (
@@ -71,6 +73,7 @@ const Login = () => {
                         />
                      </div>
                   </div>{" "}
+                  {error && <p>{error}</p>}
                   <div className="card-actions justify-center mt-6">
                      <button type="submit" className="btn btn-primary  w-full">
                         Sign In

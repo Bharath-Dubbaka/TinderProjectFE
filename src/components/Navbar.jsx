@@ -2,6 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUser } from "../utils/store/userSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
+import axios from "axios";
 
 const Navbar = () => {
    const photoUrl = useSelector((state) => state.user?.photoUrl);
@@ -15,9 +17,24 @@ const Navbar = () => {
 
    // console.log(imageSrc);
 
-   const handleLogout = () => {
-      dispatch(removeUser());
-      console.log("user logged out");
+   const handleLogout = async () => {
+      console.log(" called the logout");
+      try {
+         const res = await axios.post(
+            BASE_URL + "/logout",
+            {},
+            {
+               withCredentials: true,
+            }
+         );
+         console.log(res, "res from handleLogout");
+
+         dispatch(removeUser());
+         navigate("/login");
+         console.log("user logged out");
+      } catch (error) {
+         console.log(error);
+      }
    };
 
    return (
