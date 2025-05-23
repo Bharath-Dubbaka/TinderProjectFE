@@ -67,7 +67,7 @@ const EditProfile = ({ user }) => {
    return (
       <div className=" flex justify-center items-center mt-10 mb-40 gap-10">
          {showToast && (
-            <div className="toast toast-top toast-center">
+            <div className="toast toast-top toast-center z-10">
                <div className="alert alert-success">
                   <span>Profile updated successfully.</span>
                </div>
