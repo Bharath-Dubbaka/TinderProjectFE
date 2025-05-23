@@ -11,12 +11,12 @@ const Login = () => {
    const [error, setError] = useState("");
    const dispatch = useDispatch();
    const navigate = useNavigate();
-   console.log(emailID, "emailID");
-   console.log(password, "password");
+   // console.log(emailID, "emailID");
+   // console.log(password, "password");
 
    const handleLoginSubmit = async (e) => {
       e.preventDefault();
-      console.log("handleLoginSubmit");
+      // console.log("handleLoginSubmit");
       try {
          const res = await axios.post(
             BASE_URL + "/login",
@@ -26,7 +26,7 @@ const Login = () => {
             },
             { withCredentials: true } //for saving cookies in browser, bcz due to cors not matching we must specify to save cookies
          );
-         console.log(res, "res from handleLoginSubmit");
+         // console.log(res, "res from handleLoginSubmit");
 
          //saving loggedInUser Info to userSlice
          dispatch(addUser(res.data));

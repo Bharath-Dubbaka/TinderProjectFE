@@ -7,7 +7,7 @@ import { addUser } from "../utils/store/userSlice";
 // import { toast, Toaster } from "sonner";
 
 const EditProfile = ({ user }) => {
-   console.log(user, "USERRR");
+   // console.log(user, "USERRR");
    const [firstName, setFirstName] = useState("");
    const [lastName, setLastName] = useState("");
    const [gender, setGender] = useState("");

@@ -1,29 +1,23 @@
-
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addedConnections } from "../utils/store/connectionsSlice";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
-import UserCard from "./UserCard";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addConnections } from "../utils/store/connectionsSlice";
 import { Link } from "react-router-dom";
 
 const Connections = () => {
-   const dispatch = useDispatch();
-
-   // Get connections from Redux store
    const connections = useSelector((store) => store.connections);
-
+   const dispatch = useDispatch();
    const fetchConnections = async () => {
       try {
-         const res = await axios.get(BASE_URL + "/user/requests/accepted", {
+         const res = await axios.get(BASE_URL + "/user/connections", {
             withCredentials: true,
          });
-         console.log("API Response:", res.data);
-
-         // Dispatch the connections data to Redux store
-         dispatch(addedConnections(res.data.data));
+         console.log(res, "res from connections");
+         dispatch(addConnections(res.data.data));
       } catch (err) {
-         console.error("Error fetching connections:", err.message);
+         // Handle Error Case
+         console.error(err);
       }
    };
 
@@ -31,19 +25,9 @@ const Connections = () => {
       fetchConnections();
    }, []);
 
-   // Add loading state and error handling
-   if (!connections) {
-      return <div>Loading connections...</div>;
-   }
+   if (!connections) return;
 
-   if (connections.length === 0) {
-      return (
-         <div className="text-center my-10">
-            <h1 className="text-bold text-2xl">No Connections Found</h1>
-            <p>Start connecting with people!</p>
-         </div>
-      );
-   }
+   if (connections.length === 0) return <h1> No Connections Found</h1>;
 
    return (
       <div className="text-center my-10">
@@ -81,5 +65,4 @@ const Connections = () => {
       </div>
    );
 };
-
 export default Connections;

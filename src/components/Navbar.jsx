@@ -18,7 +18,7 @@ const Navbar = () => {
    // console.log(imageSrc);
 
    const handleLogout = async () => {
-      console.log(" called the logout");
+      // console.log(" called the logout");
       try {
          const res = await axios.post(
             BASE_URL + "/logout",
@@ -27,11 +27,11 @@ const Navbar = () => {
                withCredentials: true,
             }
          );
-         console.log(res, "res from handleLogout");
+         // console.log(res, "res from handleLogout");
 
          dispatch(removeUser());
          navigate("/login");
-         console.log("user logged out");
+         // console.log("user logged out");
       } catch (error) {
          console.log(error);
       }
@@ -62,12 +62,12 @@ const Navbar = () => {
                   </div>
                   <ul
                      tabIndex={0}
-                     className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+                     className="menu menu-sm dropdown-content bg-base-200 rounded-box z-1 mt-3 w-52 p-2 shadow"
                   >
                      <li>
                         <Link to="/profile" className="justify-between">
                            Profile
-                           <span className="badge">
+                           <span className="badge bg-secondary">
                               {loggedInUserFirstName}
                            </span>
                         </Link>

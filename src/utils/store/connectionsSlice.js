@@ -4,7 +4,7 @@ const connectionsSlice = createSlice({
    name: "connections",
    initialState: [],
    reducers: {
-      addedConnections: (state, action) => {
+      addConnections: (state, action) => {
          // Replace the entire connections array with new data
          return action.payload;
       },
@@ -19,7 +19,7 @@ const connectionsSlice = createSlice({
    },
 });
 
-export const { addedConnections, removeConnection, clearConnections } =
+export const { addConnections, removeConnection, clearConnections } =
    connectionsSlice.actions;
 
 export default connectionsSlice.reducer;

@@ -19,7 +19,7 @@ const Body = () => {
             withCredentials: true,
          });
          dispatch(addUser(res.data));
-         console.log("Logged in user check from cookies");
+         // console.log("Logged in user check from cookies");
       } catch (error) {
          if (error.status == 401) {
             navigate("/login");

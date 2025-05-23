@@ -11,13 +11,14 @@ const Feed = () => {
    const feed = useSelector((store) => store?.feed);
 
    const getFeed = async () => {
-      if (feed) return;
-      console.log(feed, "feed from store");
+      //removed below "if (feed) return" so we get instant updates from DB when other users  do interested/ignored us OR we accepted/rejected
+      // if (feed) return;
+      // console.log(feed, "feed from store");
       try {
          const res = await axios.get(BASE_URL + "/feed", {
             withCredentials: true,
          });
-         console.log(res, "FEED res");
+         // console.log(res, "FEED res");
          dispatch(addFeed(res?.data?.data));
       } catch (error) {
          setError(error?.response?.data || "Something went wrong");

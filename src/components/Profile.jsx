@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 const Profile = () => {
    const user = useSelector((store) => store?.user);
-   console.log(user, "USER FRO PROF");
+   // console.log(user, "User from Profile compo");
    return (
       <div>
          <EditProfile user={user} />

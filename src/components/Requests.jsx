@@ -2,25 +2,47 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { allRequests } from "../utils/store/requestsSlice";
+import { allRequests, removeRequest } from "../utils/store/requestsSlice";
 
 const Requests = () => {
    const dispatch = useDispatch();
-
    // Get received requests from Redux store
    const requests = useSelector((store) => store.requests);
 
    const getRequests = async () => {
-      const res = await axios.get(BASE_URL + "/user/requests/received", {
-         withCredentials: true,
-      });
-      console.log(res, "res from Request compo");
-      dispatch(allRequests(res?.data?.data));
+      try {
+         const res = await axios.get(BASE_URL + "/user/requests/received", {
+            withCredentials: true,
+         });
+         //  console.log(res, "res from Request compo");
+         dispatch(allRequests(res?.data?.data));
+      } catch (error) {
+         console.log(error);
+      }
    };
-   console.log(requests, "requests from use selector");
+
+   //    console.log(requests, "requests from use selector");
    useEffect(() => {
       getRequests();
    }, []);
+
+   const handleRequest = async (status, requestId) => {
+      try {
+         const res = await axios.post(
+            BASE_URL + "/request/review/" + status + "/" + requestId,
+            {},
+            {
+               withCredentials: true,
+            }
+         );
+         //to sync store and DB
+         //  getRequests();
+         //made new removeRequest from slice so we don't have to call getRequests() and have rendering problems
+         dispatch(removeRequest(requestId));
+      } catch (error) {
+         console.log(error);
+      }
+   };
 
    // Add loading state and error handling
    if (!requests) {
@@ -80,10 +102,13 @@ const Requests = () => {
          <h1 className="text-bold text-white text-3xl">Requests</h1>
 
          {requests?.map((request) => {
-            console.log(request, "request from MAP");
+            {
+               /* console.log(request, "request from MAP"); */
+            }
             const { _id, firstName, lastName, photoUrl, age, gender, about } =
                request?.fromUserID;
             const requestTimeAgo = timeAgo(request.createdAt); // Calculate time ago here
+            const requestId = request?._id;
 
             return (
                <div
@@ -116,12 +141,14 @@ const Requests = () => {
                      <button
                         className=" btn btn-primary transition-all duration-300 ease-in-out
                 hover:shadow-lg hover:-translate-y-1"
+                        onClick={(e) => handleRequest("rejected", requestId)}
                      >
                         Reject
                      </button>
                      <button
                         className=" btn btn-secondary transition-all duration-300 ease-in-out
                 hover:shadow-lg hover:-translate-y-1"
+                        onClick={(e) => handleRequest("accepted", requestId)}
                      >
                         Accept
                      </button>
